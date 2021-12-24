@@ -56,13 +56,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(),"clicked in fragment",Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         b.setOnClickListener(new View.OnClickListener() {
                                  @Override
@@ -74,7 +67,7 @@ public class LoginFragment extends Fragment {
                                      viewModel.selectItem(u);
 
                                     if(loginResult!=null)
-                                        loginResult.dataFromLogin(email,password);
+                                     loginResult.dataFromLogin(email,password);
 
                                  }
                              });
