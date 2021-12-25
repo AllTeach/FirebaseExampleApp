@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -19,29 +20,26 @@ import java.util.UUID;
 
 import androidx.annotation.NonNull;
 
-public class FirestoreDB
-{
+public class FirestoreDB {
     private static final String TAG = "Firestore DB";
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser firebaseUser;
     private PostQueryResult postQueryResult;
 
 
-    public interface PostQueryResult
-    {
+    public interface PostQueryResult {
         void postsReturned(ArrayList<Post> arr);
     }
 
-    public FirestoreDB()
-    {
+    public FirestoreDB() {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
     }
-    public void insertUser(String email, String password, String phone,String nickName  )
-    {
+
+    public void insertUser(String email, String password, String phone, String nickName) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        User user = new User(email,password,firebaseUser.getUid(),phone,nickName);
-        DocumentReference documentReference =firebaseFirestore.collection("users").document(firebaseUser.getUid());
+        User user = new User(email, password, firebaseUser.getUid(), phone, nickName);
+        DocumentReference documentReference = firebaseFirestore.collection("users").document(firebaseUser.getUid());
         // when reaching a specific document use set
         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -53,20 +51,18 @@ public class FirestoreDB
 
 
     // this method simulates an update of a specific field for a user
-    public void updatePhoneNumber(String phone)
-    {
-        DocumentReference documentReference =firebaseFirestore.collection("users").document(firebaseUser.getUid());
-        documentReference.update("phone",phone);
+    public void updatePhoneNumber(String phone) {
+        DocumentReference documentReference = firebaseFirestore.collection("users").document(firebaseUser.getUid());
+        documentReference.update("phone", phone);
 
     }
 
     // post here include image that will be stored in the Firebase Storage
     // in the firestore database we keep only the storage ref
-    public void insertPost(String title, String body, Bitmap bitmap)
-    {
+    public void insertPost(String title, String body, Bitmap bitmap) {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         // add the photo to the firebase storage
-        Post post = new Post(title,body,"",firebaseUser.getEmail());
+        Post post = new Post(title, body, "", firebaseUser.getEmail());
 
         firebaseFirestore.collection("posts")
                 .add(post)
@@ -80,60 +76,62 @@ public class FirestoreDB
                         // "folder" named entryname which is the id of the post
                         // unique image name in case we have more than one image in the post...future
                         String uniqueString = UUID.randomUUID().toString() + ".jpg";
-                        String path =  documentReference.getId().concat("/"+uniqueString );
+                        String path = documentReference.getId().concat("/" + uniqueString);
 
-                        fbStorage.uploadImageToStorage(bitmap,path);
+                        fbStorage.uploadImageToStorage(bitmap, path);
                         // update the storage reference in the post entry
-                        documentReference.update("bitmapUrl",path);
+                        documentReference.update("bitmapUrl", path);
                     }
                 });
     }
 
 
-    public void setPostQueryResult(PostQueryResult pqr)
-    {
+    public void setPostQueryResult(PostQueryResult pqr) {
         postQueryResult = pqr;
 
     }
-    public void getAllPosts()
-    {
+
+
+    public void getDataFromListener(Task<QuerySnapshot> task) {
         ArrayList<Post> arr = new ArrayList<>();
+        if (task.isSuccessful()) {
+            for (QueryDocumentSnapshot doc : task.getResult()) {
+                arr.add(doc.toObject(Post.class));
+                // get all images
+
+            }
+            if (postQueryResult != null)
+                postQueryResult.postsReturned(arr);
+        } else {
+            Log.d(TAG, "onComplete: failed");
+            postQueryResult.postsReturned(null);
+        }
+
+    }
+
+
+    public void getPostsOrderByWithLimit(String field, int limit) {
+
+        firebaseFirestore.collection("posts").orderBy(field).limit(limit).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        getDataFromListener(task);
+                    }
+                });
+    }
+
+    public void getAllPosts() {
 
         firebaseFirestore.collection("posts").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()) {
-                            for (QueryDocumentSnapshot doc : task.getResult()) {
-                                arr.add(doc.toObject(Post.class));
-                                // get all images
-
-
-                            }
-                            if(postQueryResult!=null)
-                                postQueryResult.postsReturned(arr);
-                        }
-                        else
-                        {
-                            Log.d(TAG, "onComplete: failed");
-                            postQueryResult.postsReturned(null);
-                        }
-
+                        getDataFromListener(task);
                     }
+
                 });
 
 
-
-
     }
-
-
-
-
-
-
-
-
-
-
 }

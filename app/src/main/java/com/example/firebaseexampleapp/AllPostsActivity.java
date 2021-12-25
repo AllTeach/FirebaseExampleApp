@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -21,8 +22,6 @@ public class AllPostsActivity extends AppCompatActivity implements FirestoreDB.P
         initViews();
 
         firestoreDB.getAllPosts();
-
-
 
     }
 
@@ -43,6 +42,13 @@ public class AllPostsActivity extends AppCompatActivity implements FirestoreDB.P
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
+
+    }
+
+    public void showFilteredPosts(View view)
+    {
+        firestoreDB.getPostsOrderByWithLimit("title",3);
+
 
     }
 }

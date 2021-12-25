@@ -27,13 +27,7 @@ public class FirebaseComm
     {
         return mAuth.getCurrentUser().getEmail();
     }
-/*
-    public void createFbUser(String email, String password)
-    {
-        fbUser = new User(email,password,"");
-    }
 
- */
     public void registerUser(String email,String password)
     {
       //  createFbUser(email,password);
