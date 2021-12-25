@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 //import com.squareup.picasso.Picasso;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+
 import java.util.ArrayList;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -95,10 +97,10 @@ public class AllPostsAdapter extends RecyclerView.Adapter<AllPostsAdapter.ViewHo
 
 
         //viewHolder.ivPostPhoto.setImageResource(R.drawable.n1);
-        if(position%2==0)
+    //    if(position%2==0)
             viewHolder.mainRow.setBackgroundColor(Color.parseColor("#4CAF50"));
-        else
-            viewHolder.mainRow.setBackgroundColor(Color.parseColor("#FFC8E4A9"));
+    //    else
+    //        viewHolder.mainRow.setBackgroundColor(Color.parseColor("#FFC8E4A9"));
 
         viewHolder.getAdapterPosition();
         /*viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

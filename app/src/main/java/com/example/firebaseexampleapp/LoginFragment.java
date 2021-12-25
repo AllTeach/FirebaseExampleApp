@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
+      //  viewModel = new ViewModelProvider(requireActivity()).get(ItemViewModel.class);
 
         b.setOnClickListener(new View.OnClickListener() {
                                  @Override
@@ -63,8 +63,8 @@ public class LoginFragment extends Fragment {
                                      String email = etMail.getText().toString();
                                      String password = etPassword.getText().toString();
 
-                                     User u = new User(email,password);
-                                     viewModel.selectItem(u);
+                              //       User u = new User(email,password);
+                             //        viewModel.selectItem(u);
 
                                     if(loginResult!=null)
                                      loginResult.dataFromLogin(email,password);

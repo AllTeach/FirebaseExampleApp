@@ -48,8 +48,8 @@
         android:id="@+id/button2"
         android:layout_width="207dp"
         android:layout_height="43dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
         android:onClick="postToFirebase"
         android:text="add Post"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,11 +59,22 @@
         android:id="@+id/button"
         android:layout_width="195dp"
         android:layout_height="42dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginTop="36dp"
-        android:text="View All Posts"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
         android:onClick="gotoAllPostsActivity"
+        android:text="View All Posts"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="190dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="9dp"
+        android:text="Posts Firebase UI"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="gotoAllPostsActivityUsingFirebaseUI"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

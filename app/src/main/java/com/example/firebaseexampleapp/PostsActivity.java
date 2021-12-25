@@ -68,4 +68,10 @@ public class PostsActivity extends AppCompatActivity {
         Intent i = new Intent(this,AllPostsActivity.class);
         startActivity(i);
     }
+
+    public void gotoAllPostsActivityUsingFirebaseUI(View view)
+    {
+        Intent i = new Intent(this,AllPostsUsingFirebaseUIActivity.class);
+        startActivity(i);
+    }
 }

@@ -31,7 +31,6 @@ public class FirebaseComm
     public void registerUser(String email,String password)
     {
       //  createFbUser(email,password);
-
         mAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

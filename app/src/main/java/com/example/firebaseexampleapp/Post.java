@@ -2,6 +2,8 @@ package com.example.firebaseexampleapp;
 
 import android.graphics.Bitmap;
 
+import androidx.annotation.Nullable;
+
 public class Post
 {
     private String title;
@@ -56,5 +58,20 @@ public class Post
     public void setOwnerMail(String ownerMail) {
         this.ownerMail = ownerMail;
     }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+
+        if(obj instanceof Post)
+        {
+            Post p = (Post)obj;
+            return this.getTitle().equals(p.getTitle()) &&
+                    this.getBody().equals(p.getBody()) &&
+                    this.bitmapUrl.equals(p.getBitmapUrl());
+        }
+        return false;
+
+    }
+
 
 }

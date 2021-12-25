@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseExampleApp">
         <activity
+            android:name=".AllPostsUsingFirebaseUIActivity"
+            android:exported="true" />
+        <activity
             android:name=".AllPostsActivity"
             android:exported="true" />
         <activity

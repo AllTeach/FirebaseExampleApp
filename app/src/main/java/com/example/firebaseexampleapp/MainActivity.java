@@ -39,6 +39,9 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
 
         initViews();
+
+
+        /*
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         viewModel.getSelectedItem().observe(this, new Observer<User>() {
             @Override
@@ -46,6 +49,8 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
                 Toast.makeText(MainActivity.this, "received " + user.getEmail() + " " + user.getPassword(),Toast.LENGTH_SHORT).show();
             }
         });
+
+         */
 
     }
 
