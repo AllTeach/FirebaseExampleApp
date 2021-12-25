@@ -1,8 +1,10 @@
 package com.example.firebaseexampleapp;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,15 +32,12 @@ public class FBStorage
 
     public void uploadImageToStorage(Bitmap bitmap,String entryName)
     {
-
         // set the reference as follows:
         // "folder" named entryname which is the id of the post
         // unique image name in case we have more than one image in the post...future
         StorageReference storageRef = firebaseStorage.getReference();
         // at the moment add random name
-
         StorageReference imageRef = storageRef.child(entryName);
-
         // bitmap to byte array
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -53,7 +52,6 @@ public class FBStorage
                 if (!task.isSuccessful()) {
                     throw task.getException();
                 }
-
                 // Continue with the task to get the download URL
                 return imageRef.getDownloadUrl();
             }
@@ -79,4 +77,24 @@ public class FBStorage
 
     }
 
+    public void downloadImageFromStorage(ImageView ivPostPhoto,Post p)
+    {
+        StorageReference storageRef = firebaseStorage.getReference();
+        // at the moment add random name
+        StorageReference imageRef = storageRef.child(p.getBitmapUrl());
+        imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Use the bytes to display the image
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                ivPostPhoto.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
+    }
 }

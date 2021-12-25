@@ -45,6 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etPostName" />
 
     <Button
+        android:id="@+id/button2"
         android:layout_width="207dp"
         android:layout_height="43dp"
         android:layout_marginStart="64dp"
@@ -53,5 +54,16 @@
         android:text="add Post"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPostData" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="195dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="36dp"
+        android:text="View All Posts"
+        android:onClick="gotoAllPostsActivity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

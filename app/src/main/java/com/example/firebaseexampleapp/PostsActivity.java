@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
@@ -48,13 +49,11 @@ public class PostsActivity extends AppCompatActivity {
 
     public void postToFirebase(View view)
     {
-
         Bitmap bitmap =((BitmapDrawable)ivPhoto.getDrawable()).getBitmap();
         FirestoreDB firestoreDB = new FirestoreDB();
         String title = etTitle.getText().toString();
         String body = etBody.getText().toString();
         firestoreDB.insertPost(title,body,bitmap);
-
     }
 
 
@@ -63,5 +62,10 @@ public class PostsActivity extends AppCompatActivity {
     {
         mGetThumb.launch(null);
 
+    }
+    public void gotoAllPostsActivity(View view)
+    {
+        Intent i = new Intent(this,AllPostsActivity.class);
+        startActivity(i);
     }
 }

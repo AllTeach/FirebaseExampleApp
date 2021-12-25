@@ -11,7 +11,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
@@ -20,8 +23,14 @@ public class FirestoreDB
 {
     private static final String TAG = "Firestore DB";
     private FirebaseFirestore firebaseFirestore;
-    FirebaseUser firebaseUser;
+    private FirebaseUser firebaseUser;
+    private PostQueryResult postQueryResult;
 
+
+    public interface PostQueryResult
+    {
+        void postsReturned(ArrayList<Post> arr);
+    }
 
     public FirestoreDB()
     {
@@ -78,6 +87,44 @@ public class FirestoreDB
                         documentReference.update("bitmapUrl",path);
                     }
                 });
+    }
+
+
+    public void setPostQueryResult(PostQueryResult pqr)
+    {
+        postQueryResult = pqr;
+
+    }
+    public void getAllPosts()
+    {
+        ArrayList<Post> arr = new ArrayList<>();
+
+        firebaseFirestore.collection("posts").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            for (QueryDocumentSnapshot doc : task.getResult()) {
+                                arr.add(doc.toObject(Post.class));
+                                // get all images
+
+
+                            }
+                            if(postQueryResult!=null)
+                                postQueryResult.postsReturned(arr);
+                        }
+                        else
+                        {
+                            Log.d(TAG, "onComplete: failed");
+                            postQueryResult.postsReturned(null);
+                        }
+
+                    }
+                });
+
+
+
+
     }
 
 
