@@ -41,6 +41,7 @@ public class AllPostsUsingFirebaseUIActivity extends AppCompatActivity {
                 .build();
         adapter = new FirebaseUIPostAdapter(options);
 
+
         RecyclerView recyclerView = findViewById(R.id.rvFirebaseUI);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

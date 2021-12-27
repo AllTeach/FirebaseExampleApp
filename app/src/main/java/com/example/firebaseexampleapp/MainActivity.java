@@ -1,6 +1,7 @@
 package com.example.firebaseexampleapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.SupportMenuInflater;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +14,7 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,6 +43,9 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
         initViews();
 
 
+
+
+
         /*
         viewModel = new ViewModelProvider(this).get(ItemViewModel.class);
         viewModel.getSelectedItem().observe(this, new Observer<User>() {
@@ -53,6 +58,9 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
          */
 
     }
+
+
+
 
 
     @Override

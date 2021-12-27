@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -19,23 +20,33 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class FirestoreDB {
+public class FirestoreDB<T> {
     private static final String TAG = "Firestore DB";
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser firebaseUser;
-    private PostQueryResult postQueryResult;
+    private QueryResult postQueryResult;
 
 
-    public interface PostQueryResult {
-        void postsReturned(ArrayList<Post> arr);
-        void postsChanged(Post p,int oldIndex,int newIndex);
+
+
+
+
+
+
+
+    public interface QueryResult<T> {
+        void postsReturned(ArrayList<T> arr);
+        void postsChanged(Map<String,Object> map,int oldIndex,int newIndex);
         void postRemoved(int index);
-        void postAdded(Post p,int index);
+        void postAdded(Map<String,Object> map, int index);
     }
 
 
@@ -95,30 +106,26 @@ public class FirestoreDB {
 
                             }
                         });
-             
-                
+
+
     }
 
-
-    public void setPostQueryResult(PostQueryResult pqr) {
+    public void setPostQueryResult(QueryResult pqr) {
         postQueryResult = pqr;
 
     }
 
 
     public void getDataFromListener(Task<QuerySnapshot> task) {
-        ArrayList<Post> arr = new ArrayList<>();
+        ArrayList<Map<String,Object>> arr = new ArrayList<>();
         if (task.isSuccessful()) {
             for (QueryDocumentSnapshot doc : task.getResult()) {
-                arr.add(doc.toObject(Post.class));
-                // get all images
-
+                arr.add(doc.getData());
             }
             if (postQueryResult != null)
                 postQueryResult.postsReturned(arr);
         } else {
             Log.d(TAG, "onComplete: failed");
-           // postQueryResult.postsReturned(null);
         }
 
     }
@@ -135,9 +142,9 @@ public class FirestoreDB {
                 });
     }
 
-    public void getAllPosts() {
+    public void getAllDocumentsInColletction( String collectionName) {
 
-        firebaseFirestore.collection("posts").get()
+        firebaseFirestore.collection(collectionName).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -147,9 +154,10 @@ public class FirestoreDB {
                 });
 
     }
-    public void listenForPostChanges()
+    public void listenForChanges(String path)
     {
-        firebaseFirestore.collection("posts").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+        firebaseFirestore.collection(path).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(error!=null)
@@ -159,10 +167,9 @@ public class FirestoreDB {
                 for (DocumentChange change:value.getDocumentChanges()) {
                     if(change.getType() == DocumentChange.Type.MODIFIED)
                     {
-                        Post p = change.getDocument().toObject(Post.class);
-                        Log.d(TAG, "onEvent:  changed" + p.getTitle());
+
                         if (postQueryResult != null)
-                            postQueryResult.postsChanged(p,change.getOldIndex(),change.getNewIndex());
+                            postQueryResult.postsChanged(change.getDocument().getData(),change.getOldIndex(),change.getNewIndex());
 
                     }
                     else if(change.getType() == DocumentChange.Type.REMOVED)
@@ -177,14 +184,14 @@ public class FirestoreDB {
                     else if(change.getType() == DocumentChange.Type.ADDED)
                     {
                         if(change.getOldIndex() != change.getNewIndex()) {
-                            Post p = change.getDocument().toObject(Post.class);
-                            Log.d(TAG, "onEvent:  added" + p.getTitle());
+                        //    T t=null;
+                          //  Post p = change.getDocument().toObject(t.getClass().getSimpleName());
+                         //   Log.d(TAG, "onEvent:  added" + p.getTitle());
                             if (postQueryResult != null)
-                                postQueryResult.postAdded(p, change.getNewIndex());
+                                // Map<String,Object>
+                                postQueryResult.postAdded(change.getDocument().getData(), change.getNewIndex());
                         }
                     }
-
-
 
                 }
 

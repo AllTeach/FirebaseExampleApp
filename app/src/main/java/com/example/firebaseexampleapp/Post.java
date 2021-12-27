@@ -2,6 +2,9 @@ package com.example.firebaseexampleapp;
 
 import android.graphics.Bitmap;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import androidx.annotation.Nullable;
 
 public class Post
@@ -73,5 +76,31 @@ public class Post
 
     }
 
+    public static Post hashMapToPost(Map<String,Object> map)
+    {
+        Post p = new Post();
+        p.title = map.get("title").toString();
+        p.body = map.get("body").toString();
+        p.bitmapUrl = map.get("bitmapUrl").toString();
+        p.ownerMail = map.get("ownerMail").toString();
+
+        return p;
+
+    }
+    public Map<String,Object> postToHasMap()
+    {
+        Map<String,Object> map = new HashMap<>();
+        map.put("title",this.title);
+        map.put("body",this.body);
+        map.put("bitmapUrl",this.bitmapUrl);
+        map.put("ownerMail",this.ownerMail);
+        return map;
+
+
+
+    }
+
+
 
 }
+

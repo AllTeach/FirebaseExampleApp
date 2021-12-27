@@ -33,7 +33,8 @@ public class FBStorage
     public void uploadImageToStorage(Bitmap bitmap,String entryName)
     {
         // set the reference as follows:
-        // "folder" named entryname which is the id of the post
+        // "folder
+        // " named entryname which is the id of the post
         // unique image name in case we have more than one image in the post...future
         StorageReference storageRef = firebaseStorage.getReference();
         // at the moment add random name
