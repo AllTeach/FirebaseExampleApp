@@ -9,7 +9,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.GenericTypeIndicator;
+//import comס   .google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -33,13 +33,6 @@ public class FirestoreDB<T> {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser firebaseUser;
     private QueryResult postQueryResult;
-
-
-
-
-
-
-
 
 
     public interface QueryResult<T> {

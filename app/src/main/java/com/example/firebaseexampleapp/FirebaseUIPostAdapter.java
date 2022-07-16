@@ -76,11 +76,15 @@ public class FirebaseUIPostAdapter extends FirestoreRecyclerAdapter<Post,Firebas
         holder.tvPostTitle.setText(model.getTitle());
         holder.tvPostData.setText(model.getBody());
 
+
         // get the image from the firebase storage
         // can use also picasso - very convenient
         fbStorage.downloadImageFromStorage(holder.ivPostPhoto, model);
 
-        holder.mainRow.setBackgroundColor(Color.parseColor("#4CAF50"));
+        if(model.getTitle().equals("found"))
+            holder.mainRow.setBackgroundColor(Color.parseColor("#68C4AF"));
+        else
+            holder.mainRow.setBackgroundColor(Color.parseColor("#FE9D8C"));
 
 
 

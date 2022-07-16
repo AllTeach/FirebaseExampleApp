@@ -1,11 +1,13 @@
 package com.example.firebaseexampleapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -58,6 +60,7 @@ public class AllPostsUsingFirebaseUIActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
+
                 adapter.deleteItem(viewHolder.getAbsoluteAdapterPosition());
 
             }
@@ -68,12 +71,41 @@ public class AllPostsUsingFirebaseUIActivity extends AppCompatActivity {
             public void onViewClicked(DocumentSnapshot documentSnapshot, int position) {
                 Post p = documentSnapshot.toObject(Post.class);
                 String id = documentSnapshot.getId();
-                Log.d(TAG, "onViewClicked: " + p.getTitle() + " id " + id);
-                Toast.makeText(AllPostsUsingFirebaseUIActivity.this,"clicked: item FB id " + id + " postion " + position
-                ,Toast.LENGTH_SHORT).show();
+
+                String email = p.getOwnerMail();
+                String title = "";
+                if(p.getTitle().equals("found"))
+                     title="Your dog?\n Do you know the owner?";
+                else
+                    title="Have you seen this dog?";
+                String data = "please contact via mail " + email;
+                showAlertDialog(title,data);
+
+                // create Alert Dialog requesting whether want to contact
+
 
             }
         });
+    }
+
+    private void showAlertDialog(String title,String data)
+    {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(data);
+        alertDialog.setIcon(R.drawable.ic_launcher_background);
+        alertDialog.setCancelable(true);
+
+        // in case clicked YES
+        // remove from list and then from database
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog dialog= alertDialog.create();
+        dialog.show();
     }
 
     @Override

@@ -11,6 +11,8 @@ public class ItemViewModel extends ViewModel {
     public void selectItem(User u) {
         selectedItem.setValue(u);
     }
+
+
     public LiveData<User> getSelectedItem() {
         return selectedItem;
     }

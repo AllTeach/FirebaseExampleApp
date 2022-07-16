@@ -20,7 +20,6 @@ public class FirebaseComm
     public boolean isUserSignedIn()
     {
         return mAuth.getCurrentUser() != null;
-
     }
 
     public String authUserEmail()

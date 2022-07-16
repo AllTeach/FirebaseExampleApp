@@ -24,7 +24,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="post title"
+        android:hint="lost/found"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -36,7 +36,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="post data"
+        android:hint="further details "
         android:inputType="textMultiLine"
         android:lines="10"
         android:maxLines="15"
@@ -61,8 +61,8 @@
         android:layout_height="42dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="16dp"
-        android:onClick="gotoAllPostsActivity"
-        android:text="View All Posts"
+        android:onClick="selectPictureGallery"
+        android:text="Pic From Gallery"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
@@ -72,7 +72,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="63dp"
         android:layout_marginTop="9dp"
-        android:text="Posts Firebase UI"
+        android:text="View all Posts"
         app:layout_constraintStart_toStartOf="parent"
         android:onClick="gotoAllPostsActivityUsingFirebaseUI"
         app:layout_constraintTop_toBottomOf="@+id/button" />

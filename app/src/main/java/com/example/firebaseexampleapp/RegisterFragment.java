@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ public class RegisterFragment extends Fragment {
     private Button b;
     private EditText etMail,etPassword,etPhoneHome,etNickname;
 
+    // using liveData
+    ItemViewModel viewModel;
+
     public  interface RegisterResult
     {
         void dataFromRegister(String mail,String password,String phoneNumber, String nickName);
@@ -25,6 +29,8 @@ public class RegisterFragment extends Fragment {
 
     public RegisterFragment() {
         // Required empty public constructor
+
+
     }
 
 
@@ -60,6 +66,13 @@ public class RegisterFragment extends Fragment {
                 String phone = etPhoneHome.getText().toString();
                 String nickName = etNickname.getText().toString();
 
+                viewModel = viewModel = new ViewModelProvider(getActivity()).get(ItemViewModel.class);
+                // live data
+                User u = new User(email,password);
+                viewModel.selectItem(u);
+
+
+                // interface
 
                 if(registerResult!=null)
                     registerResult.dataFromRegister(email,password,phone,nickName);

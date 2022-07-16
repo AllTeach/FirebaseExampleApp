@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/layout/activity_all_posts.xml" value="0.161231884057971" />
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/layout/activity_all_posts_using_firebase_uiactivity.xml" value="0.161231884057971" />
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/layout/activity_main.xml" value="0.161231884057971" />
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/layout/activity_posts.xml" value="0.161231884057971" />
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/layout/fragment_login.xml" value="0.13134057971014493" />
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/layout/fragment_register.xml" value="0.13134057971014493" />
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/layout/rv_row_layout.xml" value="4.666666666666667" />
+        <entry key="..\:/Android/FirebaseExampleApp/app/src/main/res/menu/my_menu.xml" value="0.1796875" />
         <entry key="..\:/FirebaseExampleApp/app/src/main/res/layout/activity_all_posts.xml" value="0.31302083333333336" />
         <entry key="..\:/FirebaseExampleApp/app/src/main/res/layout/activity_all_posts_using_firebase_uiactivity.xml" value="0.31197916666666664" />
         <entry key="..\:/FirebaseExampleApp/app/src/main/res/layout/activity_main.xml" value="0.483695652173913" />
@@ -14,7 +22,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
