@@ -15,6 +15,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
@@ -72,11 +73,13 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
 
         // Check if user is signed in (non-null) and update UI accordingly.
-
+/*
         if(comm.isUserSignedIn()) {
             Toast.makeText(this, "user signed in: " + comm.authUserEmail(), Toast.LENGTH_SHORT).show();
             Log.d(TAG, "onStart: " + comm.authUserEmail());
         }
+
+ */
 
         //updateUI(currentUser);
     }
@@ -85,8 +88,8 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
         // initiating the tabhost
         viewPager = findViewById(R.id.viewPager);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
-        comm = new FirebaseComm();
-        firestoreDB = new FirestoreDB();
+     //   comm = new FirebaseComm();
+       // firestoreDB = new FirestoreDB();
 
         FragmentPagerAdapter
                 adapter
@@ -94,9 +97,11 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
         // Set the adapter onto
         // the view pager
-        String[] arr = {"Login","Register"};
+        String[] arr = {"Login","Register","Login2","Login3"};
+
+        int[] arrDraw = {R.drawable.googleg_standard_color_18,R.drawable.common_full_open_on_phone,R.drawable.send,R.drawable.user};
         viewPager.setAdapter(adapter);
-        new TabLayoutMediator(tabLayout,viewPager,(tab, position) -> tab.setText( arr[position])//(position + 1))
+        new TabLayoutMediator(tabLayout,viewPager,(tab, position) -> tab.setIcon(arrDraw[position])//tab.setText( arr[position])//(position + 1))
         ).attach();
     }
 

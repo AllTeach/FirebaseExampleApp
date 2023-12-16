@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -29,17 +30,17 @@ public class PostsActivity extends AppCompatActivity {
     private ActivityResultLauncher<Void> mGetThumb;
     // Launcher
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            uri -> {
-
-                // just an example of extracting an image
-                // Handle the returned Uri
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                    ImageView imageView = findViewById(R.id.imageView);
-                    imageView.setImageBitmap(bitmap);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+            new ActivityResultCallback<Uri>() {
+                @Override
+                public void onActivityResult(Uri uri) {
+                    // Handle the returned Uri
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(PostsActivity.this.getContentResolver(), uri);
+                        ImageView imageView = PostsActivity.this.findViewById(R.id.imageView);
+                        imageView.setImageBitmap(bitmap);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -90,6 +91,7 @@ public class PostsActivity extends AppCompatActivity {
         mGetThumb = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), new ActivityResultCallback<Bitmap>() {
             @Override
             public void onActivityResult(Bitmap result) {
+                if(result!=null)
                 ivPhoto.setImageBitmap(result);
             }
         });
